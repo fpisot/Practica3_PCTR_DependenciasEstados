@@ -8,7 +8,7 @@ public class SistemaLanzador {
 		
 		System.out.println("¡Parque abierto!");
 		
-		for (int i = 0; i < Integer.parseInt(args[0]); i++) {
+		for (int i = 0; i < Integer.parseInt(args[0]); i++) { //numero de puertas definido por parámetro
 			
 			String puerta = ""+((char) (letra_puerta++));
 			

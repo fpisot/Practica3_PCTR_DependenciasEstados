@@ -3,6 +3,11 @@ package src.p03.c01;
 import java.util.Enumeration;
 import java.util.Hashtable;
 
+/**
+ * @author Fernando Pisot y Ángel Ortíz
+ * @version 1.0
+ * Programación Concurrente. Práctica 3. 10/03/23
+ */
 public class Parque implements IParque{
 
 
