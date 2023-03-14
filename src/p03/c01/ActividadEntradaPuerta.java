@@ -23,7 +23,7 @@ public class ActividadEntradaPuerta implements Runnable{
 					parque.entrarAlParque(puerta);
 					TimeUnit.MILLISECONDS.sleep(new Random().nextInt(5)*1000);
 				} catch (InterruptedException e) {
-					Logger.getGlobal().log(Level.INFO, "Entrada interrumpida");
+					Logger.getGlobal().log(Level.INFO, "Entrada interrumpida en puerta: " + puerta);
 					Logger.getGlobal().log(Level.INFO, e.toString());
 					return;
 				}

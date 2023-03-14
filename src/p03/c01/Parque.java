@@ -4,17 +4,20 @@ import java.util.Enumeration;
 import java.util.Hashtable;
 
 /**
- * @author Fernando Pisot y Ángel Ortíz
+ * @author Fernando Pisot Serrano
  * @author Ángel Ortiz de Lejarazu Sánchez
  * @version 1.0
  * Programación Concurrente. Práctica 3. 10/03/23
  */
 public class Parque implements IParque{
 
-
-	// TODO 
+	/** Máxima capacidad de personas en el parque.*/
+	private final int MAX_PERSONAS_PARQUE = 30;
+	/** Personas en el parque total (independientemente de entrada).*/
 	private int contadorPersonasTotales;
+	/** Tabla con nombre de puerta y contador parcial de personas.*/
 	private Hashtable<String, Integer> contadoresPersonasPuerta;
+
 	
 	
 	public Parque() {
@@ -24,27 +27,32 @@ public class Parque implements IParque{
 
 
 	@Override
-	public void entrarAlParque(String puerta){		// TODO
-		
-		// Si no hay entradas por esa puerta, inicializamos
-		if (contadoresPersonasPuerta.get(puerta) == null){
-			contadoresPersonasPuerta.put(puerta, 0);
+	//public void entrarAlParque(String puerta){
+	public synchronized void entrarAlParque(String puerta){
+
+		comprobarAntesDeEntrar();
+
+		// Aumentamos el contador total
+		contadorPersonasTotales++;
+
+		// Se incluye una espera entre ambos incrementos para comprobar exclusión con sincronización
+		try {
+			TimeUnit.MILLISECONDS.sleep(generadorAleatorios.nextInt(3000));
+		}catch (InterruptedException e) {
+			Logger.getGlobal().log(Level.INFO, "Interrupción del hilo que utiliza el objeto parque");
+			return;
 		}
-		
-		// TODO
-				
-		
-		// Aumentamos el contador total y el individual
-		contadorPersonasTotales++;		
+		// Incrementamos contador por puerta
 		contadoresPersonasPuerta.put(puerta, contadoresPersonasPuerta.get(puerta)+1);
-		
+
 		// Imprimimos el estado del parque
 		imprimirInfo(puerta, "Entrada");
-		
-		// TODO
-		
-		
-		// TODO
+
+		// Comprobamos que cumple invariante: personas totales = suma de personas por puerta
+		checkInvariante();
+
+		// Se notifica el cambio dede estado
+		notifyAll();
 		
 	}
 	
@@ -83,13 +91,25 @@ public class Parque implements IParque{
 	}
 
 	protected void comprobarAntesDeEntrar(){
+		// Hay que comprobar que no se ha llegado al máximo de gente permitida en el parque
+		if (contadorPersonasTotales == MAX_PERSONAS_PARQUE){
+			// No sé cómo tiene que indicar para que no meta más gente. No debería devolver un booleano?
+		}
+		// Si no hay entradas por esa puerta, inicializamos
+		if (contadoresPersonasPuerta.get(puerta) == null){
+			contadoresPersonasPuerta.put(puerta, 0);
+		}
+
 		//
 		// TODO
 		//
 	}
 
 	protected void comprobarAntesDeSalir(){
-		//
+		// Hay que comprobar que queda gente en el parque
+		if (contadorPersonasTotales > 0){
+			//return true?
+		}
 		// TODO
 		//
 	}
