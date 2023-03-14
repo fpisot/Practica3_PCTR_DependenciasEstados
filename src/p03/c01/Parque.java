@@ -5,7 +5,7 @@ import java.util.Hashtable;
 
 /**
  * @author Fernando Pisot y Ángel Ortíz
- * @author Ángel Ortiz de L
+ * @author Ángel Ortiz de Lejarazu
  * @version 1.0
  * Programación Concurrente. Práctica 3. 10/03/23
  */
