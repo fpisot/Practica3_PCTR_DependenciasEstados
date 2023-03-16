@@ -17,8 +17,8 @@ public class Parque implements IParque{
 	private int contadorPersonasTotales;
 	/** Tabla con nombre de puerta y contador parcial de personas.*/
 	private Hashtable<String, Integer> contadoresPersonasPuerta;
-
-	
+	/** Generador aleatorio para esperas */
+	private static Random generadorAleatorios = new Random ();
 	
 	public Parque() {
 		contadorPersonasTotales = 0;
@@ -51,14 +51,41 @@ public class Parque implements IParque{
 		// Comprobamos que cumple invariante: personas totales = suma de personas por puerta
 		checkInvariante();
 
-		// Se notifica el cambio dede estado
+		// Se notifica el cambio de estado
 		notifyAll();
 		
 	}
-	
-	// 
-	// TODO Método salirDelParque
-	//
+
+	@Override
+	public synchronized void salirDelParque(String puerta) {
+		// Comprobamos que queda gente en el parque
+		comprobarAntesDeSalir();
+		comprobarantesDeSalirPuerta(puerta);
+
+		// Decrementamos el contador total
+		contadorPersonasTotales--;
+
+		// Se incluye una espera entre ambos decrementos para comprobar exclusión con sincronización
+		try {
+			TimeUnit.MILLISECONDS.sleep(generadorAleatorios.nextInt(3000));
+		}catch (InterruptedException e) {
+			Logger.getGlobal().log(Level.INFO, "Interrupción del hilo que utiliza el objeto parque");
+			return;
+		}
+		// Incrementamos contador por puerta
+		contadoresPersonasPuerta.put(puerta, contadoresPersonasPuerta.get(puerta)-1);
+
+		// Imprimimos el estado del parque
+		imprimirInfo(puerta, "Salida");
+
+		// Comprobamos que cumple invariante: personas totales = suma de personas por puerta
+		checkInvariante();
+
+		// Se notifica el cambio de estado
+		notifyAll();
+
+	}
+
 	
 	
 	private void imprimirInfo (String puerta, String movimiento){
@@ -80,39 +107,50 @@ public class Parque implements IParque{
 			}
 		return sumaContadoresPuerta;
 	}
-	
+	/**
+	 * Se va a comprobar que:
+	 * Suma total personas en parque = suma parcial de gente por puertas.
+	 * Personas entre 0 y MAX_PERSONAS_PARQUE.
+	 * */
 	protected void checkInvariante() {
 		assert sumarContadoresPuerta() == contadorPersonasTotales : "INV: La suma de contadores de las puertas debe ser igual al valor del contador del parte";
-		// TODO 
-		// TODO
-		
-		
-		
+		assert contadorPersonasTotales <= MAX_PERSONAS_PARQUE : "Aforo máximo de parque sobrepasado";
+		assert contadorPersonasTotales > 0 : "Ha salido gente del parque que no existía!!!";
 	}
 
 	protected void comprobarAntesDeEntrar(){
-		// Hay que comprobar que no se ha llegado al máximo de gente permitida en el parque
 		if (contadorPersonasTotales == MAX_PERSONAS_PARQUE){
-			// No sé cómo tiene que indicar para que no meta más gente. No debería devolver un booleano?
+			wait(); //Si parque está lleno deberá esperar.
 		}
-		// Si no hay entradas por esa puerta, inicializamos
+		// Si no hay entradas por esa puerta, inicializamos //NO ESTOY SEGURO DE SI ESTO SE PUEDE HACER AQUÍ
 		if (contadoresPersonasPuerta.get(puerta) == null){
 			contadoresPersonasPuerta.put(puerta, 0);
 		}
 
-		//
-		// TODO
-		//
 	}
 
+	/**
+	 * Comprueba que haya gente en el parque sino quedará en estado de espera.
+	 */
 	protected void comprobarAntesDeSalir(){
-		// Hay que comprobar que queda gente en el parque
-		if (contadorPersonasTotales > 0){
-			//return true?
-		}
-		// TODO
-		//
-	}
 
+		if (contadorPersonasTotales == 0){
+			wait(); 	// Si no queda gente en el parque no puede salir.
+		}
+		// QUIZA TENGA QUE IR ENTRE TRY-CATCH!!*************************************************************
+
+	}
+	/**
+	 * Creo esta función porque puede haber gente en el parque pero por otras puertas.
+	 * Como no sé si se puede cambiar la programación dada lo creo en otra función
+	 */
+	protected void comprobarantesDeSalirPuerta(String puerta){
+		Integer personasPuerta = contadoresPersonasPuerta.get(puerta);
+		if (personasPuerta == 0){
+			wait(); 	// Si no personas en la puerta indicada espera.
+		}
+		// QUIZA TENGA QUE IR ENTRE TRY-CATCH!!*************************************************************
+
+	}
 
 }
