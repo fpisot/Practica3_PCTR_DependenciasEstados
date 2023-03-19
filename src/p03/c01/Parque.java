@@ -4,6 +4,8 @@ import java.util.Enumeration;
 import java.util.Hashtable;
 
 /**
+ * Simula la entrada y salida de personas en un parque.
+ *
  * @author Fernando Pisot Serrano
  * @author Ángel Ortiz de Lejarazu Sánchez
  * @version 1.0
