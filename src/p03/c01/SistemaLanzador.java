@@ -1,5 +1,12 @@
 package src.p03.c01;
-
+/**
+ * Contiene main del proyecto.
+ *
+ * @author Fernando Pisot Serrano
+ * @author Ángel Ortiz de Lejarazu Sánchez
+ * @version 1.0
+ * Programación Concurrente. Práctica 3. 19/03/23
+ */
 public class SistemaLanzador {
 	public static void main(String[] args) {
 		
