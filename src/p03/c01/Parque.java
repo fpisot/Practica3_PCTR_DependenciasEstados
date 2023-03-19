@@ -57,7 +57,10 @@ public class Parque implements IParque{
 	public synchronized void salirDelParque(String puerta) {
 		// Comprobamos que queda gente en el parque
 		comprobarAntesDeSalir();
-
+		// Comprobación necesaria por si no hubiera mismo número de entrada y salida por puerta.
+		if (contadoresPersonasPuerta.get(puerta) == null || contadoresPersonasPuerta.get(puerta) == 0) {
+			return;
+		}
 		//VALORAR EL CASO DE SALIDA ANTES DE ENTRADA PUERTA == NULL
 		if (contadoresPersonasPuerta.get(puerta) == null || contadoresPersonasPuerta.get(puerta) == 0) {
 			return;
@@ -113,7 +116,7 @@ public class Parque implements IParque{
 	}
 
 	protected void comprobarAntesDeEntrar(){
-		while (contadorPersonasTotales >= 50) {
+		while (contadorPersonasTotales >= MAX_PERSONAS_PARQUE) {
 			try {
 				wait();
 			} catch (InterruptedException e) {
