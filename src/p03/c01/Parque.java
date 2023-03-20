@@ -22,6 +22,10 @@ public class Parque implements IParque{
 	private Hashtable<String, Integer> contadoresPersonasPuerta;
 	/** Generador aleatorio para esperas */
 	private static Random generadorAleatorios = new Random ();
+	/** Para calcular los tiempos medios.*/
+	private long tinicial;
+	private double tmedio;
+	
 	
 	public Parque() {
 		contadorPersonasTotales = 0;
