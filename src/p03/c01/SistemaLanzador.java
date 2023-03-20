@@ -13,9 +13,10 @@ public class SistemaLanzador {
 		IParque parque = new Parque();
 		char letra_puerta = 'A';
 		//final int NUM_PUERTAS = 2;
+		int NumPuertas=3;
 		System.out.println("¡Parque abierto!");
 		
-		for (int i = 0; i < Integer.parseInt(args[0]); i++) { //numero de puertas definido por parámetro
+		for (int i = 0; i < NumPuertas; i++) { //numero de puertas definido por parámetro
 			
 			String puerta = ""+((char) (letra_puerta++));
 			
