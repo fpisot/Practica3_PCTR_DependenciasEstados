@@ -74,6 +74,9 @@ public class Parque implements IParque{
 		
 		// Comprobamos que queda gente en el parque
 		comprobarAntesDeSalir();
+		
+		/**
+		Bucles comentados por duplicidad.
 		// Comprobación necesaria por si no hubiera mismo número de entrada y salida por puerta.
 		if (contadoresPersonasPuerta.get(puerta) == null || contadoresPersonasPuerta.get(puerta) == 0) {
 			return;
@@ -82,7 +85,8 @@ public class Parque implements IParque{
 		if (contadoresPersonasPuerta.get(puerta) == null || contadoresPersonasPuerta.get(puerta) == 0) {
 			return;
 		}
-
+		*/
+		
 		// Decrementamos el contador total
 		contadorPersonasTotales--;
 		// Decrementamos contador por puerta
@@ -162,6 +166,10 @@ public class Parque implements IParque{
 			}
 		}
 	}
+	
+	/**
+	 * Funcion que calcula el tiempo medio de espera de cada persona en el parque.
+	 */
 	
 	private synchronized double obtenerTmedio() {
 	    long tActual = System.currentTimeMillis();
