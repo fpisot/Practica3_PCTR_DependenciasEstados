@@ -1,5 +1,10 @@
 package src.p03.c01;
 
+import java.util.Random;
+import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  * Simula la salida de personas del parque. Cada puerta será un hilo de ejecución.
  *
@@ -8,10 +13,10 @@ package src.p03.c01;
  * @version 1.0
  * Programación Concurrente. Práctica 3. 19/03/23
  */
-public class ActividadSalidaPuerta{
+public class ActividadSalidaPuerta implements Runnable{
 
     /**  Se realizarán 20 entradas por puerta */
-    private static final int NUMENTRADAS = 20;
+    private static final int NUMSALIDAS = 20;
     /** Identificador de puerta */
     private String puerta;
     /** Referencia al parque */
@@ -19,7 +24,7 @@ public class ActividadSalidaPuerta{
     /** Segundos dormido entre interacción */
     private static final int SEGUNDOS_ESPERA = 5;
 
-    public ActividadEntradaPuerta(String puerta, IParque parque) {
+    public ActividadSalidaPuerta(String puerta, IParque parque) {
         this.puerta = puerta;
         this.parque = parque;
     }

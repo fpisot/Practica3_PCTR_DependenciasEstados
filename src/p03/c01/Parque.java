@@ -2,6 +2,7 @@ package src.p03.c01;
 
 import java.util.Enumeration;
 import java.util.Hashtable;
+import java.util.Random;
 
 /**
  * Simula la entrada y salida de personas en un parque.

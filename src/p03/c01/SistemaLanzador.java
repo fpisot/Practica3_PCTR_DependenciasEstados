@@ -10,9 +10,9 @@ package src.p03.c01;
 public class SistemaLanzador {
 	public static void main(String[] args) {
 		
-		IParque parque = new Parque(); // TODO
+		IParque parque = new Parque();
 		char letra_puerta = 'A';
-		
+		//final int NUM_PUERTAS = 2;
 		System.out.println("¡Parque abierto!");
 		
 		for (int i = 0; i < Integer.parseInt(args[0]); i++) { //numero de puertas definido por parámetro
