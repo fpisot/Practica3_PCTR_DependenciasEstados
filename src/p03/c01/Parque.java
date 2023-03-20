@@ -129,6 +129,7 @@ public class Parque implements IParque{
 	}
 
 	protected void comprobarAntesDeEntrar(){
+	// Hay que comprobar que no se ha llegado al máximo de gente permitida en el parque
 		while (contadorPersonasTotales >= MAX_PERSONAS_PARQUE) {
 			try {
 				wait();
@@ -142,7 +143,7 @@ public class Parque implements IParque{
 	 * Comprueba que haya gente en el parque sino quedará en estado de espera.
 	 */
 	protected void comprobarAntesDeSalir(){
-		// Si no hay gente en parque se saldrá.
+	// Hay que comprobar que queda gente en el parque para que puedan salir alguien.
 		while (contadorPersonasTotales <= 0) {
 			try {
 				wait();
