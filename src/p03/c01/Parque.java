@@ -45,6 +45,12 @@ public class Parque implements IParque{
 		this.contadorPersonasTotales++;
 		// Incrementamos contador por puerta
 		contadoresPersonasPuerta.put(puerta, contadoresPersonasPuerta.get(puerta)+1);
+		
+		//Cálculo de tiempos
+		long tActual = System.currentTimeMillis();
+		tmedio = (tmedio + (tActual - tinicial))/2.0;
+		
+		
 		// Imprimimos el estado del parque
 		imprimirInfo(puerta, "Entrada");
 		// Comprobamos que cumple invariante: personas totales = suma de personas por puerta
@@ -72,6 +78,10 @@ public class Parque implements IParque{
 		// Decrementamos contador por puerta
 		contadoresPersonasPuerta.put(puerta, contadoresPersonasPuerta.get(puerta)-1);
 
+		//Cálculo de tiempos
+		long tActual = System.currentTimeMillis();
+		tmedio = (tmedio + (tActual - tinicial))/2.0;
+		
 		// Imprimimos el estado del parque
 		imprimirInfo(puerta, "Salida");
 
@@ -87,7 +97,9 @@ public class Parque implements IParque{
 	
 	private void imprimirInfo (String puerta, String movimiento){
 		System.out.println(movimiento + " por puerta " + puerta);
-		System.out.println("--> Personas en el parque " + contadorPersonasTotales); //+ " tiempo medio de estancia: "  + tmedio);
+		//System.out.println("--> Personas en el parque " + contadorPersonasTotales); //+ " tiempo medio de estancia: "  + tmedio);
+		System.out.println("--> Personas en el parque " + contadorPersonasTotales + " tiempo medio de estancia: " + obtenerTmedio());
+
 		
 		// Iteramos por todas las puertas e imprimimos sus entradas
 		for(String p: contadoresPersonasPuerta.keySet()){
@@ -138,5 +150,10 @@ public class Parque implements IParque{
 				e.printStackTrace();
 			}
 		}
+	}
+	
+	private synchronized double obtenerTmedio() {
+	    long tActual = System.currentTimeMillis();
+	    return (tActual - tinicial) / (contadorPersonasTotales * 1.0);
 	}
 }
