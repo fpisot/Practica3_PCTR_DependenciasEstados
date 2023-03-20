@@ -36,12 +36,15 @@ public class Parque implements IParque{
 	//public void entrarAlParque(String puerta){
 	public synchronized void entrarAlParque(String puerta){
 
-		comprobarAntesDeEntrar(); //wait
 		// Aumentamos el contador total
 		// si valor de puerta no está iniciado asignamos 0
 		if (contadoresPersonasPuerta.get(puerta) == null) {
 			contadoresPersonasPuerta.put(puerta, 0);
 		}
+		
+		
+		comprobarAntesDeEntrar(); //wait
+
 		this.contadorPersonasTotales++;
 		// Incrementamos contador por puerta
 		contadoresPersonasPuerta.put(puerta, contadoresPersonasPuerta.get(puerta)+1);
