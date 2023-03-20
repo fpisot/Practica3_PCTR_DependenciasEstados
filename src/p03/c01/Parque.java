@@ -44,8 +44,9 @@ public class Parque implements IParque{
 		
 		
 		comprobarAntesDeEntrar(); //wait
-
-		this.contadorPersonasTotales++;
+		
+		//Aumentamos el contador total.
+		contadorPersonasTotales++;
 		// Incrementamos contador por puerta
 		contadoresPersonasPuerta.put(puerta, contadoresPersonasPuerta.get(puerta)+1);
 		
@@ -65,6 +66,12 @@ public class Parque implements IParque{
 
 	@Override
 	public synchronized void salirDelParque(String puerta) {
+		// Si no hay entradas, inicializamos
+		if (contadoresPersonasPuerta.get(puerta) == null){
+			contadoresPersonasPuerta.put(puerta, 0);
+		}
+		
+		
 		// Comprobamos que queda gente en el parque
 		comprobarAntesDeSalir();
 		// Comprobación necesaria por si no hubiera mismo número de entrada y salida por puerta.
@@ -77,7 +84,7 @@ public class Parque implements IParque{
 		}
 
 		// Decrementamos el contador total
-		this.contadorPersonasTotales--;
+		contadorPersonasTotales--;
 		// Decrementamos contador por puerta
 		contadoresPersonasPuerta.put(puerta, contadoresPersonasPuerta.get(puerta)-1);
 
